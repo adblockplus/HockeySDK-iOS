@@ -184,4 +184,18 @@ typedef NS_ENUM(NSInteger, BITHockeyErrorReason) {
   BITHockeyErrorUnknown
 };
 
+/**
+ * Types of metrics which should NOT get enqueued to telemetry
+ */
+typedef NS_ENUM(NSInteger, BITTelemetryFilterMask) {
+  /**
+   * Default enqueues all metrics types
+   */
+  BITTelemetryFilterNone = 0,
+  /**
+   * App session events
+   */
+  BITTelemetryFilterSession = 1 << 0
+};
+
 #endif /* HockeySDK_HockeyEnums_h */

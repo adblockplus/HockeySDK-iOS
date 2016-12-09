@@ -99,6 +99,18 @@
   OCMVerifyAll(mockChannel);
 }
 
+- (void)testTrackSessionFilter {
+  id mockChannel = OCMClassMock([BITChannel class]);
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnonnull"
+  self.sut = [[BITMetricsManager alloc] initWithChannel:mockChannel telemetryContext:nil persistence:nil userDefaults:nil];
+#pragma clang diagnostic pop
+  self.sut.telemetryFilterMask = BITTelemetryFilterSession;
+  OCMReject([mockChannel enqueueTelemetryItem:[OCMArg any]]);
+  [self.sut trackSessionWithState:BITSessionState_start];
+  OCMVerifyAll(mockChannel);
+}
+
 - (void)testNewSessionUpdatesSessionContext {
   BITTelemetryContext *context = [BITTelemetryContext new];
   id mockContext = OCMPartialMock(context);

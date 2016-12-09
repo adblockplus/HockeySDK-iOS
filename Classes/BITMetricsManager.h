@@ -6,6 +6,7 @@
 #import "BITHockeyBaseManager.h"
 
 #import "HockeySDKNullability.h"
+#import "HockeySDKEnums.h"
 NS_ASSUME_NONNULL_BEGIN
 
 /**
@@ -32,6 +33,12 @@ NS_ASSUME_NONNULL_BEGIN
  *  A property indicating whether the BITMetricsManager instance is disabled.
  */
 @property (nonatomic, assign) BOOL disabled;
+
+/**
+ * A bitmask property setting the types of metrics which should NOT get enqueued to telemetry.
+ * Default is BITMetricsFilterNone: all types of metrics are enqueued.
+ */
+@property (nonatomic, assign) BITTelemetryFilterMask telemetryFilterMask;
 
 /**
  *  This method allows to track an event that happened in your app.

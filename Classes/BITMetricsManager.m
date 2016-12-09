@@ -46,6 +46,7 @@ static NSString *const BITMetricsURLPathString = @"v2/track";
 - (instancetype)init {
   if ((self = [super init])) {
     _disabled = NO;
+    _telemetryFilterMask = BITTelemetryFilterNone;
     _metricsEventQueue = dispatch_queue_create(kBITMetricsEventQueue, DISPATCH_QUEUE_CONCURRENT);
     _appBackgroundTimeBeforeSessionExpires = 20;
     _serverURL = [NSString stringWithFormat:@"%@%@", BITMetricsBaseURLString, BITMetricsURLPathString];
@@ -174,6 +175,10 @@ static NSString *const BITMetricsURLPathString = @"v2/track";
 - (void)trackSessionWithState:(BITSessionState)state {
   if (self.disabled) {
     BITHockeyLogDebug(@"INFO: BITMetricsManager is disabled, therefore this tracking call was ignored.");
+    return;
+  }
+  if (self.telemetryFilterMask & BITTelemetryFilterSession) {
+    BITHockeyLogDebug(@"INFO: BITMetricsManager is filtering session tracking, therefore this tracking call was ignored.");
     return;
   }
   BITSessionStateData *sessionStateData = [BITSessionStateData new];
